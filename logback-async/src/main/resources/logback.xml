@@ -1,0 +1,37 @@
+<configuration>
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%date [%thread] %-5level %logger{25} - %msg%n</Pattern>
+		</layout>
+	</appender>
+
+	<appender name="file" class="ch.qos.logback.core.FileAppender">
+		<file>logs/main.log</file>
+		<append>true</append>
+		<encoder>
+			<Pattern>%date [%thread] %-5level %logger{25} - %msg%n</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="queue" class="ch.qos.logback.classic.net.JMSQueueAppender">
+		<InitialContextFactoryName>
+			org.apache.activemq.jndi.ActiveMQInitialContextFactory
+		</InitialContextFactoryName>
+		<ProviderURL>tcp://localhost:61616</ProviderURL>
+		<QueueConnectionFactoryBindingName>queueConnectionFactory</QueueConnectionFactoryBindingName>
+		<QueueBindingName>my-logback-queue</QueueBindingName>
+	</appender>
+
+	<logger name="JMS_LOGGER" level="INFO" additivity="false">
+		<appender-ref ref="queue" />
+	</logger>
+
+	<logger name="br.org.roger.logback" level="INFO" additivity="false">
+		<appender-ref ref="console" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="console" />
+	</root>
+</configuration>

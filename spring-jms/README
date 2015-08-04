@@ -1,0 +1,2 @@
+Executar aplicacao informando o start-class:
+mvn spring-boot:run -Dstart-class=br.org.roger.springjms.JmsJavaconfigApplication
